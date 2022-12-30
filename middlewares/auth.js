@@ -22,7 +22,7 @@ function generateAccessToken({ id, email }) {
 }
 
 function getUserDataByToken(token) {
-    return jwt.decode(token).data;
+    return jwt.decode(token);
 }
 
 module.exports = {
