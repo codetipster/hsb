@@ -35,7 +35,7 @@ app.use(uploader.single('image'));
 //? Initial the routes
 app.use("/api/user", require("./routes/user.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
-app.use("/api/accountant", require("./routes/accountant.routes"));
+// app.use("/api/accountant", require("./routes/accountant.routes"));
 // Statics files
 app.use('/uploads', express.static('uploads/'));
 
