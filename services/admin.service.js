@@ -1,5 +1,5 @@
 const { AdminModel } = require('../models/admin.model');
-const { AccountantModel } = require('../models/accountant.model');
+const { ClientModel } = require('../models/client.model');
 
 
 // callback is any reference to executable code that is passed as an argument to another piece of code
@@ -26,8 +26,21 @@ async function createAccountant(params, callback) {
     });
 }
 
+//?
+async function createClient(params, callback) {
+    if (params.email === undefined) return callback({ message: "Email required." });
+
+    ClientModel.create(params).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
 
 module.exports = {
     signup,
     createAccountant,
+    createClient,
 }

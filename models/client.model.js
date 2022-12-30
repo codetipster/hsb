@@ -32,7 +32,6 @@ const Client = new Schema({
 });
 
 
-const ClientModel = userSchema.discriminator("client", Client);
 
 Client.set("toJSON", {
     transform: (document, returnedObject) => {
@@ -40,8 +39,10 @@ Client.set("toJSON", {
         delete returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject.password;
-
+        
     },
 });
+
+const ClientModel = userSchema.discriminator("client", Client);
 
 module.exports = { ClientModel };
