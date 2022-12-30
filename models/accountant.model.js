@@ -16,9 +16,8 @@ const Accountant = new Schema({
     },
 });
 
-const AccountantModel = userSchema.discriminator("accountant", Accountant);
 
-AccountantModel.set("toJSON", {
+Accountant.set("toJSON", {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
@@ -26,5 +25,7 @@ AccountantModel.set("toJSON", {
         delete returnedObject.password;
     },
 });
+
+const AccountantModel = userSchema.discriminator("accountant", Accountant);
 
 module.exports = { AccountantModel };
