@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
 exports.profile = (req, res, next) => {
     const token = req.headers["authorization"];
     var id = auth.getUserDataByToken(token).id;
-    AdminService.getAdminById({id}, (error, result) => {
+    AdminService.getAdminById({ id }, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         return res.status(200).send(result);
@@ -55,6 +55,16 @@ exports.createClient = (req, res, next) => {
     req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
 
     AdminService.createClient(req.body, (error, result) => {
+        if (error) return next(error); // go to the next middleware which is our error handler
+
+        return res.status(200).send(result);
+    });
+};
+
+
+//? Statistics 
+exports.statistics = (req, res, next) => {
+    AdminService.getStatistics((error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         return res.status(200).send(result);
