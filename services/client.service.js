@@ -19,9 +19,19 @@ async function getClientById({ id }, callback) {
     });
 }
 
+async function getClientByAccountantId({ id }, callback) {
+    ClientModel.find({ accountantId: id }).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
 
 
 module.exports = {
     getClients,
     getClientById,
+    getClientByAccountantId,
 }
