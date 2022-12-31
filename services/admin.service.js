@@ -14,7 +14,7 @@ async function signup(params, callback) {
     });
 }
 
-//?
+//? Accountant
 async function createAccountant(params, callback) {
     if (params.email === undefined) return callback({ message: "Email required." });
 
@@ -26,7 +26,7 @@ async function createAccountant(params, callback) {
     });
 }
 
-//?
+//? Client
 async function createClient(params, callback) {
     if (params.email === undefined) return callback({ message: "Email required." });
 
