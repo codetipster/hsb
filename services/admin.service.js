@@ -14,6 +14,15 @@ async function signup(params, callback) {
     });
 }
 
+async function getAdminById({ id }, callback) {
+    AdminModel.findById(id).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
 //? Accountant
 async function createAccountant(params, callback) {
     if (params.email === undefined) return callback({ message: "Email required." });
@@ -41,6 +50,7 @@ async function createClient(params, callback) {
 
 module.exports = {
     signup,
+    getAdminById,
     createAccountant,
     createClient,
 }

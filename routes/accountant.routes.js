@@ -3,7 +3,8 @@ const router = express.Router();
 
 const accountantController = require('../controllers/accountant.controller');
 
-router.get('/', accountantController.getAccountants);
-router.get('/:id', accountantController.getAccountantById);
+router.get('/profile', accountantController.profile);
+router.get('/accountants', accountantController.getAccountants);
+router.get('/accountants/:id', accountantController.getAccountantById);
 
 module.exports = router;

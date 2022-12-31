@@ -6,5 +6,6 @@ const adminController = require('../controllers/admin.controller');
 router.post('/signup', adminController.signup);
 router.post('/create-accountant', adminController.createAccountant);
 router.post('/create-client', adminController.createClient);
+router.get('/profile', adminController.profile);
 
 module.exports = router;
