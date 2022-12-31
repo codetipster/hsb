@@ -2,6 +2,9 @@ const auth = require('../middlewares/auth');
 const AccountantService = require('../services/accountant.service');
 const ClientService = require('../services/client.service');
 const InvoiceService = require('../services/invoice.service');
+const ReportService = require('../services/report.service');
+require("dotenv").config();
+const { ORIGINPATH } = process.env;
 
 exports.getAccountants = (req, res, next) => {
 
@@ -58,6 +61,17 @@ exports.getInvoices = (req, res, next) => {
 
 exports.updateInvoice = (req, res, next) => {
     InvoiceService.updateInvoice({ id: req.params.id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+//? Reports
+exports.createReport = (req, res, next) => {
+    req.body.file = `${ORIGINPATH}/uploads/${req.file.filename}`;
+
+    ReportService.create(req.body, (error, result) => {
         if (error) return next(error);
 
         return res.status(200).send(result);

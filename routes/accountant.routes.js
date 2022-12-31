@@ -10,5 +10,6 @@ router.get('/accountants/:id', accountantController.getAccountantById);
 router.get('/clients', accountantController.getClients);
 router.get('/invoices', accountantController.getInvoices);
 router.put('/invoices/:id', accountantController.updateInvoice);
+router.post('/reports', accountantController.createReport);
 
 module.exports = router;
