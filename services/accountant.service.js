@@ -1,11 +1,17 @@
 const { AccountantModel } = require('../models/accountant.model');
 
 
-// callback is any reference to executable code that is passed as an argument to another piece of code
-async function signup(params, callback) {
-    if (params.email === undefined) return callback({ message: "Email required." });
+async function getAccountants(callback) {
+    AccountantModel.find({ user: 'accountant' }).then((response) => {
+        return callback(null, response);
 
-    AccountantModel.create(params).then((response) => {
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
+async function getAccountantById({ id }, callback) {
+    AccountantModel.findById(id).then((response) => {
         return callback(null, response);
 
     }).catch((error) => {
@@ -14,6 +20,8 @@ async function signup(params, callback) {
 }
 
 
+
 module.exports = {
-    signup
+    getAccountants,
+    getAccountantById
 }

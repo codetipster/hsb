@@ -19,6 +19,7 @@ exports.signup = (req, res, next) => {
     });
 };
 
+//? Accountant
 exports.createAccountant = (req, res, next) => {
     const { password } = req.body;
     const salt = bcrypt.genSaltSync(10);  // for create a unique password enven for the same two passwords
@@ -33,6 +34,7 @@ exports.createAccountant = (req, res, next) => {
     });
 };
 
+//? Client
 exports.createClient = (req, res, next) => {
     const { password } = req.body;
     const salt = bcrypt.genSaltSync(10);  // for create a unique password enven for the same two passwords

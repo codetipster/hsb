@@ -1,22 +1,19 @@
-const bcrypt = require('bcryptjs');
-require("dotenv").config();
-const { ORIGINPATH } = process.env;
-
 const AccountantService = require('../services/accountant.service');
 
+exports.getAccountants = (req, res, next) => {
 
-exports.signup = (req, res, next) => {
-    const { password } = req.body;
-    const salt = bcrypt.genSaltSync(10);  // for create a unique password enven for the same two passwords
+    AccountantService.getAccountants((error, result) => {
+        if (error) return next(error);
 
-    req.body.password = bcrypt.hashSync(password, salt); // hashing the password
-    req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
+        return res.status(200).send(result);
+    });
+};
 
-    AccountantService.signup(req.body, (error, result) => {
-        if (error) return next(error); // go to the next middleware which is our error handler
+exports.getAccountantById = (req, res, next) => {
+    var id = req.params.id;
+    AccountantService.getAccountantById({ id }, (error, result) => {
+        if (error) return next(error);
 
-        return res.status(200).send({
-            data: result,
-        });
+        return res.status(200).send(result);
     });
 };

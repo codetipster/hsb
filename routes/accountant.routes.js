@@ -3,6 +3,7 @@ const router = express.Router();
 
 const accountantController = require('../controllers/accountant.controller');
 
-router.post('/signup', accountantController.signup);
+router.get('/', accountantController.getAccountants);
+router.get('/:id', accountantController.getAccountantById);
 
 module.exports = router;
