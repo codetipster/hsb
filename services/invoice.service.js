@@ -40,9 +40,21 @@ async function getInvoicesByAccountant({ id }, callback) {
     return callback(null, invoices);
 }
 
+async function updateInvoice({ id, params }, callback) {
+    const filter = { _id: id };
+    
+    InvoiceModel.findOneAndUpdate(filter, params, {new: true}).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
 
 module.exports = {
     create,
     getInvoicesByClient,
     getInvoicesByAccountant,
+    updateInvoice,
 }

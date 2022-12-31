@@ -55,3 +55,11 @@ exports.getInvoices = (req, res, next) => {
         return res.status(200).send(result);
     });
 };
+
+exports.updateInvoice = (req, res, next) => {
+    InvoiceService.updateInvoice({ id: req.params.id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
