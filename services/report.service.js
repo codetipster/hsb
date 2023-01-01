@@ -11,7 +11,18 @@ async function create(params, callback) {
     });
 }
 
+async function getReportsByClient({ id }, callback) {
+    if (id == null) return callback({ message: "Client id required!" });
+
+    ReportModel.find({ clientId: id }).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
 
 module.exports = {
     create,
+    getReportsByClient,
 }

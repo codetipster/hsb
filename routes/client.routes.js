@@ -9,6 +9,7 @@ router.get('/clients/:id', clientController.getClientById);
 
 router.post('/invoices', clientController.createInvoice);
 router.get('/invoices', clientController.getInvoices);
+router.get('/reports', clientController.getReports);
 
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const auth = require('../middlewares/auth');
 const ClientService = require('../services/client.service');
 const InvoiceService = require('../services/invoice.service');
+const ReportsService = require('../services/report.service');
 require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
@@ -57,3 +58,15 @@ exports.getInvoices = (req, res, next) => {
     });
 };
 
+//? Reports
+
+exports.getReports = (req, res, next) => {
+    const token = req.headers["authorization"];
+    var id = auth.getUserDataByToken(token).id;
+
+    ReportsService.getReportsByClient({ id }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
