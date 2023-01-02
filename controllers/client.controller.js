@@ -2,6 +2,7 @@ const auth = require('../middlewares/auth');
 const ClientService = require('../services/client.service');
 const InvoiceService = require('../services/invoice.service');
 const ReportsService = require('../services/report.service');
+const EmployeeService = require('../services/employee.service');
 require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
@@ -78,6 +79,47 @@ exports.getReports = (req, res, next) => {
     var id = auth.getUserDataByToken(token).id;
 
     ReportsService.getReportsByClient({ id }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+//? Employee
+
+exports.createEmployee = (req, res, next) => {
+    const token = req.headers["authorization"];
+    var id = auth.getUserDataByToken(token).id;
+    req.body.clientId = auth.getUserDataByToken(token).id;
+
+    EmployeeService.create(req.body, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.getEmployees = (req, res, next) => {
+    const token = req.headers["authorization"];
+    var id = auth.getUserDataByToken(token).id;
+
+    EmployeeService.get({ id }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.updateEmployee = (req, res, next) => {
+    EmployeeService.update({ id: req.params.id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.deleteEmployee = (req, res, next) => {
+    EmployeeService.remove({ id: req.params.id}, (error, result) => {
         if (error) return next(error);
 
         return res.status(200).send(result);

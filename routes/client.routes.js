@@ -13,5 +13,9 @@ router.post('/invoices', clientController.createInvoice);
 router.get('/invoices', clientController.getInvoices);
 router.get('/reports', clientController.getReports);
 
+router.post('/employees', clientController.createEmployee);
+router.get('/employees', clientController.getEmployees);
+router.put('/employees/:id', clientController.updateEmployee);
+router.delete('/employees/:id', clientController.deleteEmployee);
 
 module.exports = router;
