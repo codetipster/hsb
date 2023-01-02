@@ -23,6 +23,7 @@ app.use(
     auth.authenticationToken.unless({
         path: [
             { url: "/api/user/login", method: ["POST"] },
+            { url: "/api/client/login", method: ["POST"] },
             { url: "/api/admin/signup", method: ["POST"] },
         ],
     })

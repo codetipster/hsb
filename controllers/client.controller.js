@@ -5,6 +5,19 @@ const ReportsService = require('../services/report.service');
 require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
+exports.login = (req, res, next) => {
+    const { legalNumber, password } = req.body;
+
+    if (legalNumber == null || password == null) return res.status(400).send("Legal number and Password are required!");
+
+    ClientService.login({ legalNumber, password }, (error, result) => {
+        if (error) return next(error.message);
+
+        return res.status(200).send(result);
+    });
+};
+
+
 exports.getClients = (req, res, next) => {
 
     ClientService.getClients((error, result) => {
