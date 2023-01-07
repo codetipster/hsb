@@ -14,6 +14,18 @@ async function login({ legalNumber, password }, callback) {
     }
 }
 
+async function updateProfile({ id, params }, callback) {
+    const filter = { _id: id };
+    console.log(params);
+    ClientModel.findOneAndUpdate(filter, params, { new: true }).then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
+
 async function getClients(callback) {
     ClientModel.find({ user: 'client' }).then((response) => {
         return callback(null, response);
@@ -46,6 +58,7 @@ async function getClientByAccountantId({ id }, callback) {
 module.exports = {
     login,
     getClients,
+    updateProfile,
     getClientById,
     getClientByAccountantId,
 }

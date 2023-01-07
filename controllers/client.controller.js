@@ -48,6 +48,20 @@ exports.profile = (req, res, next) => {
     });
 };
 
+exports.updateProfile = (req, res, next) => {
+    const token = req.headers["authorization"];
+    var id = auth.getUserDataByToken(token).id;
+    if (req.file) {
+        req.body.file = `${ORIGINPATH}/uploads/${req.file.filename}`;
+    }
+
+    ClientService.updateProfile({ id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
 //? Invoices
 exports.createInvoice = (req, res, next) => {
     const token = req.headers["authorization"];
@@ -119,7 +133,7 @@ exports.updateEmployee = (req, res, next) => {
 };
 
 exports.deleteEmployee = (req, res, next) => {
-    EmployeeService.remove({ id: req.params.id}, (error, result) => {
+    EmployeeService.remove({ id: req.params.id }, (error, result) => {
         if (error) return next(error);
 
         return res.status(200).send(result);

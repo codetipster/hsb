@@ -6,6 +6,7 @@ const userController = require('../controllers/user.controller');
 
 router.post('/login', clientController.login);
 router.get('/profile', clientController.profile);
+router.put('/profile', clientController.updateProfile);
 router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 
