@@ -4,6 +4,7 @@ require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
 const AdminService = require('../services/admin.service');
+const mailService = require('../services/email.service');
 
 
 exports.signup = (req, res, next) => {
@@ -57,6 +58,7 @@ exports.createClient = (req, res, next) => {
     AdminService.createClient(req.body, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
+        mailService.sendMail({ emailTo: req.body.email, password: password, name: req.body.firstName, legalNumber: req.body.legalNumber });
         return res.status(200).send(result);
     });
 };
