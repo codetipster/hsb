@@ -1,6 +1,7 @@
 const InvoiceModel = require('../models/invoice.model');
 const { AccountantModel } = require('../models/accountant.model');
 const { ClientModel } = require('../models/client.model');
+const notification = require('../controllers/push-notification');
 
 
 async function create(params, callback) {
@@ -42,14 +43,28 @@ async function getInvoicesByAccountant({ id }, callback) {
 
 async function updateInvoice({ id, params }, callback) {
     const filter = { _id: id };
-    
-    InvoiceModel.findOneAndUpdate(filter, params, {new: true}).then((response) => {
+    try {
+        var response = await InvoiceModel.findOneAndUpdate(filter, params, { new: true });
+        var client = await ClientModel.findById(response.clientId);
+        notification.sendClientNotification(
+            {
+                deviceToken: client.deviceToken,
+                title: 'Invoice Updated',
+                messageBody: 'Your invoice status has been updated!',
+                type: 'message'
+            },
+            (error, result) => {
+                console.log(result);
+            },
+        );
         return callback(null, response);
 
-    }).catch((error) => {
+    } catch (error) {
         return callback(error);
-    });
+    }
+
 }
+
 
 
 module.exports = {

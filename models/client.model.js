@@ -22,6 +22,7 @@ const Client = new Schema({
     mobileNumber: { type: String, required: [true, "please provide your mobile number"] },
     taxId: { type: String, default: "" },
     notes: { type: String, default: "" },
+    deviceToken: { type: String, default: "" },
     status: {
         type: String,
         trim: true,
