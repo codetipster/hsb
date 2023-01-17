@@ -38,7 +38,8 @@ exports.createAccountant = (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);  // for create a unique password enven for the same two passwords
 
     req.body.password = bcrypt.hashSync(password, salt); // hashing the password
-    req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
+    if (req.file)
+        req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
 
     AdminService.createAccountant(req.body, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
@@ -53,7 +54,8 @@ exports.createClient = (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);  // for create a unique password enven for the same two passwords
 
     req.body.password = bcrypt.hashSync(password, salt); // hashing the password
-    req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
+    if (req.file)
+        req.body.image = `${ORIGINPATH}/uploads/${req.file.filename}`;
 
     AdminService.createClient(req.body, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
