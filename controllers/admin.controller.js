@@ -45,7 +45,7 @@ exports.createAccountant = (req, res, next) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         mailService.sendMail({ emailTo: req.body.email, password: password, name: req.body.firstName, legalNumber: req.body.email });
-        return res.status(200).send({ ...result, 'message': 'Accountant account has been created successfully' });
+        return res.status(200).send(JSON.stringify({ data: result, message: "Accountant account has been created successfully" }));
     });
 };
 
@@ -62,7 +62,7 @@ exports.createClient = (req, res, next) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         mailService.sendMail({ emailTo: req.body.email, password: password, name: req.body.firstName, legalNumber: req.body.legalNumber });
-        return res.status(200).send({ ...result, 'message': 'Accountant account has been created successfully' });
+        return res.status(200).send(JSON.stringify({ data: result, message: "Client account has been created successfully" }));
     });
 };
 
