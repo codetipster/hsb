@@ -52,8 +52,9 @@ async function createAccountant(params, callback) {
 //? Client
 async function createClient(params, callback) {
     if (params.email === undefined) return callback({ message: "Email required." });
-
-    ClientModel.create(params).then((response) => {
+    const accountant = await AccountantModel.findOne({ id: params.accountatId });
+    data = { ...params, 'accountantName': accountant.firstName + " " + accountant.lastName }
+    ClientModel.create(data).then((response) => {
         return callback(null, response);
 
     }).catch((error) => {

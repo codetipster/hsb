@@ -11,6 +11,7 @@ const Client = new Schema({
         required: true,
         ref: "user",
     },
+    accountantName: { type: String, default: "" },
     legalNumber: { type: String, required: [true, "please provide your legal number"] },
     homeNumber: { type: String, required: [true, "please provide your home number"] },
     city: { type: String, required: [true, "please provide your city"] },
@@ -40,7 +41,7 @@ Client.set("toJSON", {
         delete returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject.password;
-        
+
     },
 });
 
