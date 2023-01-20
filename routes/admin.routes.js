@@ -9,4 +9,6 @@ router.post('/create-client', adminController.createClient);
 router.get('/profile', adminController.profile);
 router.get('/statistics', adminController.statistics);
 
+router.get('/invoices', adminController.getInvoices);
+
 module.exports = router;

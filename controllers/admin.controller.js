@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth');
 require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
+const InvoiceService = require('../services/invoice.service');
 const AdminService = require('../services/admin.service');
 const mailService = require('../services/email.service');
 
@@ -71,6 +72,14 @@ exports.createClient = (req, res, next) => {
 exports.statistics = (req, res, next) => {
     AdminService.getStatistics((error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.getInvoices = (req, res, next) => {
+    InvoiceService.getInvoices((error, result) => {
+        if (error) return next(error);
 
         return res.status(200).send(result);
     });
