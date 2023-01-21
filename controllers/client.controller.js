@@ -121,7 +121,10 @@ exports.createEmployee = (req, res, next) => {
 
 exports.getEmployees = (req, res, next) => {
     const token = req.headers["authorization"];
-    var id = auth.getUserDataByToken(token).id;
+    const { client_id } = req.body;
+
+    var id = client_id == null ?
+        auth.getUserDataByToken(token).id : client_id;
 
     EmployeeService.get({ id }, (error, result) => {
         if (error) return next(error);
