@@ -76,11 +76,3 @@ exports.statistics = (req, res, next) => {
         return res.status(200).send(result);
     });
 };
-
-exports.getInvoices = (req, res, next) => {
-    InvoiceService.getInvoices((error, result) => {
-        if (error) return next(error);
-
-        return res.status(200).send(result);
-    });
-};
