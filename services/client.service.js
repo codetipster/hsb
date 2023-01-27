@@ -101,7 +101,7 @@ async function updatePassword({ id, password }, callback) {
 
 async function saveOtpCode({ id, otpCode }, callback) {
     try {
-        var response = await ClientModel.findOneAndUpdate({ _id: id }, { 'otp': otp }, { new: true });
+        var response = await ClientModel.findOneAndUpdate({ _id: id }, { 'otp': otpCode }, { new: true });
         return callback(null, response);
 
     } catch (error) {

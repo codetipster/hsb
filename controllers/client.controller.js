@@ -5,6 +5,7 @@ const ReportsService = require('../services/report.service');
 const EmployeeService = require('../services/employee.service');
 const otpGenerator = require('otp-generator')
 const bcrypt = require('bcryptjs');
+const mailService = require('../services/email.service');
 
 
 require("dotenv").config();
@@ -89,11 +90,11 @@ exports.sendOtpCode = (req, res, next) => {
     const token = req.headers["authorization"];
     var id = auth.getUserDataByToken(token).id;
     var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-
+    console.log(otp);
     ClientService.saveOtpCode({ id: id, otpCode: otp }, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
-        mailService.saveOtpCode({ emailTo: req.body.email, name: req.body.firstName, otpCode: otp });
+        mailService.sendOtp({ emailTo: req.body.email, name: result.firstName, otpCode: otp });
         return res.status(200).send(JSON.stringify({ data: result, message: "OTP code has been created successfully" }));
     });
 };
@@ -104,9 +105,9 @@ exports.updatePassword = (req, res, next) => {
     const { password } = req.body;
 
     const salt = bcrypt.genSaltSync(10);
-    password = bcrypt.hashSync(password, salt);
+    newPassword = bcrypt.hashSync(password, salt);
 
-    ClientService.updatePassword({ id: id, password: password }, (error, result) => {
+    ClientService.updatePassword({ id: id, password: newPassword }, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         return res.status(200).send(JSON.stringify({ data: result, message: "Password has been created successfully" }));
