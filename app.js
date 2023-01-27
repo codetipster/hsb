@@ -24,6 +24,7 @@ app.use(
         path: [
             { url: "/api/user/login", method: ["POST"] },
             { url: "/api/client/login", method: ["POST"] },
+            { url: "/api/client/send-otp", method: ["POST"] },
             { url: "/api/admin/signup", method: ["POST"] },
         ],
     })

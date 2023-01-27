@@ -87,7 +87,7 @@ async function deleteClient({ id }, callback) {
 
 async function updatePassword({ id, password }, callback) {
     const filter = { _id: id };
-    const data = { password: password , otp: "" };
+    const data = { password: password, otp: "" };
 
     try {
         var response = await ClientModel.findOneAndUpdate(filter, data, { new: true });
@@ -99,10 +99,12 @@ async function updatePassword({ id, password }, callback) {
 
 }
 
-async function saveOtpCode({ id, otpCode }, callback) {
+async function saveOtpCode({ email, otpCode }, callback) {
     try {
-        var response = await ClientModel.findOneAndUpdate({ _id: id }, { 'otp': otpCode }, { new: true });
-        return callback(null, response);
+        var response = await ClientModel.findOneAndUpdate({ email: email }, { 'otp': otpCode }, { new: true });
+        if (response == null) callback('Email not found!');
+        const token = auth.generateAccessToken({ id: response._id, email: response.email });
+        return callback(null, { ...response.toJSON(), token });
 
     } catch (error) {
         return callback(error);

@@ -87,11 +87,9 @@ exports.deleteClient = (req, res, next) => {
 };
 
 exports.sendOtpCode = (req, res, next) => {
-    const token = req.headers["authorization"];
-    var id = auth.getUserDataByToken(token).id;
     var otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
-    console.log(otp);
-    ClientService.saveOtpCode({ id: id, otpCode: otp }, (error, result) => {
+
+    ClientService.saveOtpCode({ email: req.body.email, otpCode: otp }, (error, result) => {
         if (error) return next(error); // go to the next middleware which is our error handler
 
         mailService.sendOtp({ emailTo: req.body.email, name: result.firstName, otpCode: otp });
