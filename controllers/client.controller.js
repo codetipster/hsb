@@ -62,6 +62,25 @@ exports.updateProfile = (req, res, next) => {
     });
 };
 
+exports.updateClientStatus = (req, res, next) => {
+    var id = req.params.id;
+    ClientService.updateClientStatus({ id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.deleteClient = (req, res, next) => {
+    var id = req.params.id;
+
+    ClientService.deleteClient({ id }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
 //? Invoices
 exports.createInvoice = (req, res, next) => {
     const token = req.headers["authorization"];
@@ -81,7 +100,6 @@ exports.getInvoices = (req, res, next) => {
 
     var id = client_id == null ?
         auth.getUserDataByToken(token).id : client_id;
-
     InvoiceService.getInvoicesByClient({ id }, (error, result) => {
         if (error) return next(error);
 
@@ -97,6 +115,7 @@ exports.getReports = (req, res, next) => {
 
     var id = client_id == null ?
         auth.getUserDataByToken(token).id : client_id;
+    console.log(id);
 
     ReportsService.getReportsByClient({ id }, (error, result) => {
         if (error) return next(error);

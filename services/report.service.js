@@ -1,8 +1,11 @@
 const ReportModel = require('../models/report.model');
+const notification = require('../controllers/push-notification');
+const { ClientModel } = require('../models/client.model');
 
 
 async function create(params, callback) {
     if (params.clientId == null) return callback({ message: "Client id is required!" });
+    var client = await ClientModel.findById(params.clientId);
     ReportModel.create(params).then((response) => {
         notification.sendClientNotification(
             {
@@ -12,7 +15,6 @@ async function create(params, callback) {
                 type: 'message'
             },
             (error, result) => {
-                console.log(result);
             },
         );
         return callback(null, response);

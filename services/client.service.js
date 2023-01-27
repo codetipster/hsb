@@ -1,10 +1,13 @@
 const bcrypt = require('bcryptjs');
 const auth = require('../middlewares/auth');
 const { ClientModel } = require('../models/client.model');
+const InvoiceModel = require('../models/invoice.model');
+const ReportModel = require('../models/report.model');
+const EmployeeModel = require('../models/employee.model');
 
 async function login({ legalNumber, password }, callback) {
     const user = await ClientModel.findOne({ legalNumber });
-    if (user == null) return callback({ message: "No user founded!" });
+    if (user == null || user.status == "INACTIVE") return callback({ message: "No user founded!" });
 
     if (bcrypt.compareSync(password, user.password)) {
         const token = auth.generateAccessToken({ id: user._id, email: user.email });
@@ -53,6 +56,35 @@ async function getClientByAccountantId({ id }, callback) {
     });
 }
 
+async function updateClientStatus({ id, params }, callback) {
+    const filter = { _id: id };
+    try {
+        var response = await ClientModel.findOneAndUpdate(filter, params, { new: true });
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+
+}
+
+async function deleteClient({ id }, callback) {
+    const filter = { _id: id };
+    try {
+        var response = await ClientModel.deleteOne(filter);
+        await InvoiceModel.deleteMany({ clientId: id });
+        await ReportModel.deleteMany({ clientId: id });
+        await EmployeeModel.deleteMany({ clientId: id });
+        
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+
+}
+
+
 
 
 module.exports = {
@@ -61,4 +93,6 @@ module.exports = {
     updateProfile,
     getClientById,
     getClientByAccountantId,
+    updateClientStatus,
+    deleteClient,
 }
