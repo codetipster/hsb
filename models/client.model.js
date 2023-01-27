@@ -24,6 +24,7 @@ const Client = new Schema({
     taxId: { type: String, default: "" },
     notes: { type: String, default: "" },
     deviceToken: { type: String, default: "" },
+    otp: { type: String, default: "" },
     status: {
         type: String,
         trim: true,

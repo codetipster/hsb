@@ -12,6 +12,8 @@ router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.delete('/clients/:id', clientController.deleteClient);
 router.put('/clients/:id', clientController.updateClientStatus);
+router.post('/clients/send-otp', clientController.sendOtpCode);
+router.put('/clients/change-password', clientController.updatePassword);
 
 router.post('/invoices', clientController.createInvoice);
 router.get('/invoices', clientController.getInvoices);

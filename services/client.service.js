@@ -5,6 +5,7 @@ const InvoiceModel = require('../models/invoice.model');
 const ReportModel = require('../models/report.model');
 const EmployeeModel = require('../models/employee.model');
 
+
 async function login({ legalNumber, password }, callback) {
     const user = await ClientModel.findOne({ legalNumber });
     if (user == null || user.status == "INACTIVE") return callback({ message: "No user founded!" });
@@ -75,7 +76,7 @@ async function deleteClient({ id }, callback) {
         await InvoiceModel.deleteMany({ clientId: id });
         await ReportModel.deleteMany({ clientId: id });
         await EmployeeModel.deleteMany({ clientId: id });
-        
+
         return callback(null, response);
 
     } catch (error) {
@@ -84,7 +85,30 @@ async function deleteClient({ id }, callback) {
 
 }
 
+async function updatePassword({ id, password }, callback) {
+    const filter = { _id: id };
+    const data = { password: password , otp: "" };
 
+    try {
+        var response = await ClientModel.findOneAndUpdate(filter, data, { new: true });
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+
+}
+
+async function saveOtpCode({ id, otpCode }, callback) {
+    try {
+        var response = await ClientModel.findOneAndUpdate({ _id: id }, { 'otp': otp }, { new: true });
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+
+}
 
 
 module.exports = {
@@ -95,4 +119,6 @@ module.exports = {
     getClientByAccountantId,
     updateClientStatus,
     deleteClient,
+    saveOtpCode,
+    updatePassword,
 }
