@@ -7,8 +7,8 @@ function sendMail({ emailTo, name, legalNumber, password }) {
         {
             service: 'gmail',
             auth: {
-                user: 'sharloo.12.00@gmail.com',
-                pass: 'bkbrrhqofzscpotv'
+                user: 'info@hsbkanzlei.de@gmail.com',
+                pass: 'ointnujllbnjvgqa'
             }
         }
     );
