@@ -12,7 +12,7 @@ const app = express();
 const { DEPLOYEDPATH, ORIGINPATH } = process.env;
 app.use(
     cors({
-        origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, , ORIGINPATH],
+        origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, , ORIGINPATH, "http://hsbkanzlei.de/"],
     })
 );
 

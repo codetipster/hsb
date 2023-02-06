@@ -39,8 +39,7 @@ exports.profile = (req, res, next) => {
 exports.getClients = (req, res, next) => {
     const token = req.headers["authorization"];
     var id = auth.getUserDataByToken(token).id;
-
-    ClientService.getClientByAccountantId({ id }, (error, result) => {
+    ClientService.getClientByAccountantId({ id: id }, (error, result) => {
         if (error) return next(error);
 
         return res.status(200).send(result);
