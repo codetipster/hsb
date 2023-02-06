@@ -10,12 +10,15 @@ require("dotenv").config();
 const app = express();
 
 const { DEPLOYEDPATH, ORIGINPATH } = process.env;
-app.use(
-    cors({
-        origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, , ORIGINPATH, "http://hsbkanzlei.de/"],
-        credentials: true,
-    })
-);
+
+app.use(cors());
+
+// app.use(
+//     cors({
+//         origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, , ORIGINPATH, "http://hsbkanzlei.de/"],
+//         credentials: true,
+//     })
+// );
 
 //? Check if the request that is coming to the api is having a token or not
 //! In case of Token not provided or invalid will show unauthorized msg
