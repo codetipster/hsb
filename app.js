@@ -13,6 +13,7 @@ const { DEPLOYEDPATH, ORIGINPATH } = process.env;
 app.use(
     cors({
         origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, , ORIGINPATH, "http://hsbkanzlei.de/"],
+        credentials: true,
     })
 );
 
