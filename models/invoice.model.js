@@ -6,7 +6,7 @@ const baseOption = {
     timestamps: true,
 };
 
-const status = Object.freeze(["COMPLETED", "INREVIEW", "INCOMPLETE"]);
+const status = Object.freeze(["COMPLETED", "INREVIEW", "NEEMOREDATA"]);
 
 const Invoice = new Schema(
     {
