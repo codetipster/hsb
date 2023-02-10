@@ -31,43 +31,44 @@ async function updateProfile({ id, params }, callback) {
 
 
 async function getClients(callback) {
-    var clientList = [];
-    var clients = await ClientModel.find();
-    if (clients == null) return callback('No clients');
-
-    for (let i = 0; i < clients.length; i++) {
-        const clientInvoices = await InvoiceModel.find({ clientId: clients[i]._id });
-        const clientReports = await ReportModel.find({ clientId: clients[i]._id });
-        const clientEmployees = await EmployeeModel.find({ clientId: clients[i]._id });
-        clientList.push({ ...clients[i].toJSON(), 'invoices': clientInvoices, 'reports': clientReports, 'employees': clientEmployees });
-
-    }
-    return callback(null, clientList);
-}
-
-async function getClientById({ id }, callback) {
-    ClientModel.findById(id).then((response) => {
+    await ClientModel.find().then((response) => {
         return callback(null, response);
 
     }).catch((error) => {
         return callback(error);
     });
+    // if (clients == null) return callback('No clients');
+
+    // for (let i = 0; i < clients.length; i++) {
+    //     const clientInvoices = await InvoiceModel.find({ clientId: clients[i]._id });
+    //     const clientReports = await ReportModel.find({ clientId: clients[i]._id });
+    //     const clientEmployees = await EmployeeModel.find({ clientId: clients[i]._id });
+    //     clientList.push({ ...clients[i].toJSON(), 'invoices': clientInvoices, 'reports': clientReports, 'employees': clientEmployees });
+
+    // }
+    // return callback(null, clientList);
+}
+
+async function getClientById({ id }, callback) {
+    try {
+        var client = await ClientModel.findById(id);
+        const clientInvoices = await InvoiceModel.find({ clientId: client._id });
+        const clientReports = await ReportModel.find({ clientId: client._id });
+        const clientEmployees = await EmployeeModel.find({ clientId: client._id });
+        return callback(null, { ...client.toJSON(), 'invoices': clientInvoices, 'reports': clientReports, 'employees': clientEmployees });
+    } catch (error) {
+
+        return callback(error);
+    }
 }
 
 async function getClientByAccountantId({ id }, callback) {
-    var clientList = [];
-    var clients = await ClientModel.find({ accountantId: id });
-    if (clients == null) return callback('No clients');
+    await ClientModel.find({ accountantId: id }).then((response) => {
+        return callback(null, response);
 
-    for (let i = 0; i < clients.length; i++) {
-        const clientInvoices = await InvoiceModel.find({ clientId: clients[i]._id });
-        const clientReports = await ReportModel.find({ clientId: clients[i]._id });
-        const clientEmployees = await EmployeeModel.find({ clientId: clients[i]._id });
-        clientList.push({ ...clients[i].toJSON(), 'invoices': clientInvoices, 'reports': clientReports, 'employees': clientEmployees });
-
-    }
-    return callback(null, clientList);
-
+    }).catch((error) => {
+        return callback(error);
+    });
 }
 
 async function updateClientStatus({ id, params }, callback) {
