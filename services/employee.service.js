@@ -11,6 +11,14 @@ async function create(params, callback) {
     });
 }
 
+async function getEmployees(callback) {
+    EmployeeModel.find().then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
 async function get({ id }, callback) {
     EmployeeModel.find({ clientId: id }).then((response) => {
         return callback(null, response);
@@ -44,6 +52,7 @@ async function remove({ id }, callback) {
 module.exports = {
     create,
     get,
+    getEmployees,
     update,
     remove,
 }

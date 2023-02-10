@@ -4,6 +4,8 @@ require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
 const InvoiceService = require('../services/invoice.service');
+const ReportService = require('../services/report.service');
+const EmployeesService = require('../services/employee.service');
 const AdminService = require('../services/admin.service');
 const mailService = require('../services/email.service');
 
@@ -76,3 +78,28 @@ exports.statistics = (req, res, next) => {
         return res.status(200).send(result);
     });
 };
+
+exports.getInvoices = (req, res, next) => {
+    InvoiceService.getInvoices((error, result) => {
+        if (error) return next(error); // go to the next middleware which is our error handler
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.getReports = (req, res, next) => {
+    ReportService.getReports((error, result) => {
+        if (error) return next(error); // go to the next middleware which is our error handler
+
+        return res.status(200).send(result);
+    });
+};
+
+exports.getEmployees = (req, res, next) => {
+    EmployeesService.getEmployees((error, result) => {
+        if (error) return next(error); // go to the next middleware which is our error handler
+
+        return res.status(200).send(result);
+    });
+};
+

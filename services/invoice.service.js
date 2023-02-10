@@ -16,6 +16,14 @@ async function create(params, callback) {
 }
 
 
+async function getInvoices(callback) {
+    InvoiceModel.find().then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
 async function getInvoicesByClient({ id }, callback) {
     if (id == null) return callback({ message: "Client id required!" });
 
@@ -70,6 +78,7 @@ async function updateInvoice({ id, params }, callback) {
 
 module.exports = {
     create,
+    getInvoices,
     getInvoicesByClient,
     getInvoicesByAccountant,
     updateInvoice,

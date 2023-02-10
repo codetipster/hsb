@@ -35,7 +35,17 @@ async function getReportsByClient({ id }, callback) {
     });
 }
 
+async function getReports(callback) {
+    ReportModel.find().then((response) => {
+        return callback(null, response);
+
+    }).catch((error) => {
+        return callback(error);
+    });
+}
+
 module.exports = {
     create,
+    getReports,
     getReportsByClient,
 }
