@@ -8,7 +8,6 @@ const messageController = require('../controllers/message.controller');
 router.post('/login', clientController.login);
 router.get('/profile', clientController.profile);
 router.put('/profile', clientController.updateProfile);
-router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.delete('/clients/:id', clientController.deleteClient);
 router.put('/clients/:id', clientController.updateClientStatus);

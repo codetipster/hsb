@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth');
 require("dotenv").config();
 const { ORIGINPATH } = process.env;
 
+const ClientService = require('../services/client.service');
 const InvoiceService = require('../services/invoice.service');
 const ReportService = require('../services/report.service');
 const EmployeesService = require('../services/employee.service');
@@ -69,6 +70,14 @@ exports.createClient = (req, res, next) => {
     });
 };
 
+exports.getClients = (req, res, next) => {
+
+    ClientService.getClients((error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
 
 //? Statistics 
 exports.statistics = (req, res, next) => {

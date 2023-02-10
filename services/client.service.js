@@ -31,12 +31,18 @@ async function updateProfile({ id, params }, callback) {
 
 
 async function getClients(callback) {
-    ClientModel.find({ user: 'client' }).then((response) => {
-        return callback(null, response);
+    var clientList = [];
+    var clients = await ClientModel.find();
+    if (clients == null) return callback('No clients');
 
-    }).catch((error) => {
-        return callback(error);
-    });
+    for (let i = 0; i < clients.length; i++) {
+        const clientInvoices = await InvoiceModel.find({ clientId: clients[i]._id });
+        const clientReports = await ReportModel.find({ clientId: clients[i]._id });
+        const clientEmployees = await EmployeeModel.find({ clientId: clients[i]._id });
+        clientList.push({ ...clients[i].toJSON(), 'invoices': clientInvoices, 'reports': clientReports, 'employees': clientEmployees });
+
+    }
+    return callback(null, clientList);
 }
 
 async function getClientById({ id }, callback) {
@@ -50,7 +56,7 @@ async function getClientById({ id }, callback) {
 
 async function getClientByAccountantId({ id }, callback) {
     var clientList = [];
-    var clients = await (await ClientModel.find({ accountantId: id }));
+    var clients = await ClientModel.find({ accountantId: id });
     if (clients == null) return callback('No clients');
 
     for (let i = 0; i < clients.length; i++) {
