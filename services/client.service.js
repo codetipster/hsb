@@ -18,6 +18,18 @@ async function login({ legalNumber, password }, callback) {
     }
 }
 
+async function logout({ id }, callback) {
+    const filter = { _id: id };
+    const params = { deviceToken: "" };
+    try {
+        var response = await ClientModel.findOneAndUpdate(filter, params, { new: true });
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+}
+
 async function updateProfile({ id, params }, callback) {
     const filter = { _id: id };
     console.log(params);
@@ -129,6 +141,7 @@ async function saveOtpCode({ email, otpCode }, callback) {
 
 module.exports = {
     login,
+    logout,
     getClients,
     updateProfile,
     getClientById,

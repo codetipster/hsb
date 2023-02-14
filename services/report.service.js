@@ -15,6 +15,7 @@ async function create(params, callback) {
                 type: 'message'
             },
             (error, result) => {
+                return callback(null, {});
             },
         );
         return callback(null, response);

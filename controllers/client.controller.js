@@ -23,6 +23,15 @@ exports.login = (req, res, next) => {
     });
 };
 
+exports.logout = (req, res, next) => {
+    const token = req.headers["authorization"];
+    var id = auth.getUserDataByToken(token).id;
+    ClientService.logout({ id }, (error, result) => {
+        if (error) return next(error.message);
+
+        return res.status(200).send(result);
+    });
+};
 
 exports.getClientById = (req, res, next) => {
     var id = req.params.id;

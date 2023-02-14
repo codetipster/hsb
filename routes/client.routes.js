@@ -6,6 +6,7 @@ const userController = require('../controllers/user.controller');
 const messageController = require('../controllers/message.controller');
 
 router.post('/login', clientController.login);
+router.post('/logout', clientController.logout);
 router.get('/profile', clientController.profile);
 router.put('/profile', clientController.updateProfile);
 router.get('/clients/:id', clientController.getClientById);

@@ -1,6 +1,7 @@
 const { AdminModel } = require('../models/admin.model');
 const { ClientModel } = require('../models/client.model');
 const { AccountantModel } = require('../models/accountant.model');
+const notification = require('../controllers/push-notification');
 
 
 // callback is any reference to executable code that is passed as an argument to another piece of code
@@ -64,6 +65,21 @@ async function createClient(params, callback) {
     });
 }
 
+async function sendComment({ id, message }, callback) {
+    var client = await ClientModel.findById(id);
+    notification.sendClientNotification(
+        {
+            deviceToken: client.deviceToken,
+            title: 'Admin',
+            messageBody: message,
+            type: 'message'
+        },
+        (error, result) => {
+            return callback(null, {});
+        },
+    );
+}
+
 
 module.exports = {
     signup,
@@ -71,4 +87,5 @@ module.exports = {
     getStatistics,
     createAccountant,
     createClient,
+    sendComment,
 }

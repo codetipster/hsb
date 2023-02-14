@@ -8,7 +8,7 @@ function sendMail({ emailTo, name, legalNumber, password }) {
             service: 'gmail',
             auth: {
                 user: 'info@hsbkanzlei.de',
-                pass: 'obhfykasqxxsoywu'
+                pass: 'prpjvyktphvzgsco'
             }
         }
     );
@@ -21,7 +21,7 @@ function sendMail({ emailTo, name, legalNumber, password }) {
     }))
 
     var mailOptions = {
-        from: 'sooo78491',
+        from: 'info@hsbkanzlei.de',
         to: emailTo,
         subject: 'Welcome!',
         template: 'email',
@@ -48,8 +48,8 @@ function sendOtp({ emailTo, name, otpCode }) {
         {
             service: 'gmail',
             auth: {
-                user: 'sharloo.12.00@gmail.com',
-                pass: 'bkbrrhqofzscpotv'
+                user: 'info@hsbkanzlei.de',
+                pass: 'prpjvyktphvzgsco'
             }
         }
     );
@@ -62,7 +62,7 @@ function sendOtp({ emailTo, name, otpCode }) {
     }))
 
     var mailOptions = {
-        from: 'sooo78491@gmail.com',
+        from: 'info@hsbkanzlei.de',
         to: emailTo,
         subject: 'Welcome!',
         template: 'otp',

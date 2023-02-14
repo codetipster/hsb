@@ -12,7 +12,7 @@ const Client = new Schema({
         ref: "user",
     },
     accountantName: { type: String, default: "" },
-    legalNumber: { type: String, required: [true, "please provide your legal number"] },
+    legalNumber: { type: String, unique: true, required: [true, "please provide your legal number"] },
     homeNumber: { type: String, required: [true, "please provide your home number"] },
     city: { type: String, required: [true, "please provide your city"] },
     zipCode: { type: String, required: [true, "please provide your zip code"] },

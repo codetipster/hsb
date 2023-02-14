@@ -112,3 +112,13 @@ exports.getEmployees = (req, res, next) => {
     });
 };
 
+//? notiNotifications
+exports.sendComment = (req, res, next) => {
+    const { clientId, comment } = req.body;
+
+    if (clientId == null || comment == null) res.status().sent({ message: "Client id and comment are required" })
+    AdminService.sendComment({ id: clientId, message: comment }).then((error, result)=>{
+        if( error) return next(error);
+        return res.status(200).send({comment: "Comment has been sended"})
+    });
+};
