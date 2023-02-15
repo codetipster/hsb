@@ -7,18 +7,18 @@ async function create(params, callback) {
     if (params.clientId == null) return callback({ message: "Client id is required!" });
     var client = await ClientModel.findById(params.clientId);
     ReportModel.create(params).then((response) => {
-        notification.sendClientNotification(
-            {
-                deviceToken: client.deviceToken,
-                title: 'Report',
-                messageBody: 'You have received a new report',
-                type: 'message'
-            },
-            (error, result) => {
-                return callback(null, {});
-            },
-        );
-        return callback(null, response);
+    notification.sendClientNotification(
+        {
+            userId: client.id,
+            deviceToken: client.deviceToken,
+            title: 'Report',
+            messageBody: 'You have received a new report',
+            type: 'message'
+        },
+        (error, result) => {
+        },
+    );
+    return callback(null, response);
 
     }).catch((error) => {
         return callback(error);
