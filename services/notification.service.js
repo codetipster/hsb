@@ -1,4 +1,6 @@
+const { userSchema } = require('../models/user.model');
 const NotificationModel = require('../models/notification.model');
+const { ClientModel } = require('../models/client.model');
 
 async function create(params, callback) {
     await NotificationModel.create(params);
@@ -6,12 +8,22 @@ async function create(params, callback) {
 
 
 async function get(id, callback) {
-    await NotificationModel.find(id).then((response) => {
-        return callback(null, response);
+    const user = await userSchema.findById(id);
+    if (user.user == "admin") {
+        await NotificationModel.find().then((response) => {
+            return callback(null, response);
 
-    }).catch((error) => {
-        return callback(error);
-    });
+        }).catch((error) => {
+            return callback(error);
+        });
+    } else {
+        await NotificationModel.find({ userId: id }).then((response) => {
+            return callback(null, response);
+
+        }).catch((error) => {
+            return callback(error);
+        });
+    }
 }
 
 module.exports = {

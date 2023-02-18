@@ -6,8 +6,20 @@ const notification = require('../controllers/push-notification');
 
 async function create(params, callback) {
     if (params.name == null) return callback({ message: "Invoice name required!" });
-
+    var client = await ClientModel.findById(params.clientId);
     InvoiceModel.create(params).then((response) => {
+        notification.sendClientNotification(
+            {
+                userId: client.accountantId,
+                deviceToken: '',
+                title: 'Invoice Added',
+                messageBody: 'A new invoice has been added',
+                type: 'message'
+            },
+            (error, result) => {
+                console.log(result);
+            },
+        );
         return callback(null, response);
 
     }).catch((error) => {
@@ -54,9 +66,10 @@ async function updateInvoice({ id, params }, callback) {
     const filter = { _id: id };
     try {
         var response = await InvoiceModel.findOneAndUpdate(filter, params, { new: true });
-        var client = await ClientModel.findById(response.clientId);
+        var client = await ClientModel.findById(params.clientId);
         notification.sendClientNotification(
             {
+                userId: client.id,
                 deviceToken: client.deviceToken,
                 title: 'Invoice Updated',
                 messageBody: 'Your invoice status has been updated!',

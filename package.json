@@ -25,5 +25,8 @@
     "nodemailer": "^6.9.0",
     "nodemailer-express-handlebars": "^6.0.0",
     "otp-generator": "^4.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.75.0"
   }
 }

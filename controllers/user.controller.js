@@ -18,7 +18,7 @@ exports.getNotifications = (req, res, next) => {
 
     if (id == null) return res.status(400).send("User id is required!");
 
-    NotificationService.get({ id }, (error, result) => {
+    NotificationService.get(id, (error, result) => {
         if (error) return next(error.message);
 
         return res.status(200).send(result);

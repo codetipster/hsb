@@ -69,6 +69,7 @@ async function sendComment({ id, message }, callback) {
     var client = await ClientModel.findById(id);
     notification.sendClientNotification(
         {
+            userId: client.id,
             deviceToken: client.deviceToken,
             title: 'Admin',
             messageBody: message,
