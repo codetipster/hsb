@@ -7,6 +7,7 @@ const accountantController = require('../controllers/accountant.controller');
 router.get('/profile', accountantController.profile);
 router.get('/accountants', accountantController.getAccountants);
 router.get('/accountants/:id', accountantController.getAccountantById);
+router.put('/accountants/:id', accountantController.updateAccountantStatus);
 
 router.get('/clients', accountantController.getClients);
 router.get('/invoices', accountantController.getInvoices);

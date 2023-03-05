@@ -129,7 +129,6 @@ exports.createInvoice = (req, res, next) => {
 exports.getInvoices = (req, res, next) => {
     const token = req.headers["authorization"];
     const { client_id } = req.body;
-
     var id = client_id == null ?
         auth.getUserDataByToken(token).id : client_id;
     InvoiceService.getInvoicesByClient({ id }, (error, result) => {

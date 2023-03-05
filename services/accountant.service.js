@@ -19,9 +19,21 @@ async function getAccountantById({ id }, callback) {
     });
 }
 
+async function updateAccountantStatus({ id, params }, callback) {
+    const filter = { _id: id };
+    try {
+        var response = await AccountantModel.findOneAndUpdate(filter, params, { new: true });
+        return callback(null, response);
+
+    } catch (error) {
+        return callback(error);
+    }
+
+}
 
 
 module.exports = {
     getAccountants,
-    getAccountantById
+    getAccountantById,
+    updateAccountantStatus
 }

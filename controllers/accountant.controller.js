@@ -35,6 +35,16 @@ exports.profile = (req, res, next) => {
     });
 };
 
+exports.updateAccountantStatus = (req, res, next) => {
+    var id = req.params.id;
+    AccountantService.updateAccountantStatus({ id, params: req.body }, (error, result) => {
+        if (error) return next(error);
+
+        return res.status(200).send(result);
+    });
+};
+
+
 //? Clients
 exports.getClients = (req, res, next) => {
     const token = req.headers["authorization"];
