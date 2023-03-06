@@ -67,18 +67,21 @@ async function updateInvoice({ id, params }, callback) {
     try {
         var response = await InvoiceModel.findOneAndUpdate(filter, params, { new: true });
         var client = await ClientModel.findById(params.clientId);
-        notification.sendClientNotification(
-            {
-                userId: client.id,
-                deviceToken: client.deviceToken,
-                title: 'Invoice Updated',
-                messageBody: 'Your invoice status has been updated!',
-                type: 'message'
-            },
-            (error, result) => {
-                console.log(result);
-            },
-        );
+        console.log(client);
+        if (client != null) {
+            notification.sendClientNotification(
+                {
+                    userId: client.id,
+                    deviceToken: client.deviceToken,
+                    title: 'Invoice Updated',
+                    messageBody: 'Your invoice status has been updated!',
+                    type: 'message'
+                },
+                (error, result) => {
+                    console.log(result);
+                },
+            );
+        }
         return callback(null, response);
 
     } catch (error) {
