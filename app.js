@@ -4,7 +4,7 @@ const errors = require('./middlewares/errors');
 var { unless } = require("express-unless");
 const auth = require('./middlewares/auth');
 const uploader = require('./middlewares/upload');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 require("dotenv").config();
 
 const app = express();
@@ -34,8 +34,8 @@ app.use(
     })
 );
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); // for parsing application/json remove body parser
+app.use(express.urlencoded({ extended: true }));
 app.use(uploader.single('image'));
 
 //? Initial the routes
@@ -44,8 +44,8 @@ app.use("/api/admin", require("./routes/admin.routes"));
 app.use("/api/client", require("./routes/client.routes"));
 app.use("/api/accountant", require("./routes/accountant.routes"));
 // Statics files
-app.use('/uploads', express.static('uploads/'));
+app.use('/uploads', express.static('uploads/')); // make the uploads folder publically available- !!???are these really public files
 
-app.use(errors.errorHandler);
+app.use(errors.errorHandler); // error handler middleware to prevent information leakage to client
 
 module.exports = { app };

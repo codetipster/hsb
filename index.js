@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); //for interaction with the database
 const { app } = require("./app");
 require("dotenv").config();
 
@@ -11,7 +11,7 @@ const options = {
 const PORT = process.env.PORT || 3000;
 
 const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGODB_REMOTE_URL;
-mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', true); // ensures only valid properties for a models schema are used in queries
 mongoose
   .connect(MONGODB_URI, options)
   .then(() => {
