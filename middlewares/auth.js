@@ -21,6 +21,8 @@ function generateAccessToken({ id, email }) {
     });
 }
 
+
+
 function getUserDataByToken(token) {
     return jwt.decode(token);
 }

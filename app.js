@@ -1,17 +1,24 @@
 const express = require("express");
 const cors = require("cors");
 const errors = require('./middlewares/errors');
+
 var { unless } = require("express-unless");
 const auth = require('./middlewares/auth');
 const uploader = require('./middlewares/upload');
+const helmet = require("helmet");
+
 //const bodyParser = require('body-parser');
 require("dotenv").config();
 
 const app = express();
 
+
+
+const isProduction = process.env.NODE_ENV === 'development';
 const { DEPLOYEDPATH, ORIGINPATH } = process.env;
 
 app.use(cors());
+
 
 // app.use(
 //     cors({
@@ -22,6 +29,31 @@ app.use(cors());
 
 //? Check if the request that is coming to the api is having a token or not
 //! In case of Token not provided or invalid will show unauthorized msg
+
+// implementing helmet for security
+app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          isProduction ? 'trusted-cdn.com' : "'unsafe-inline'",
+          isProduction ? '' : "'unsafe-eval'",
+        ],
+        styleSrc: [
+          "'self'",
+          isProduction ? 'trusted-cdn.com' : "'unsafe-inline'",
+        ],
+        imgSrc: ["'self'", isProduction ? 'trusted-cdn.com' : 'data:'],
+        connectSrc: ["'self'", isProduction ? 'your-api.com' : 'localhost:3000'],
+        fontSrc: ["'self'", isProduction ? 'trusted-cdn.com' : 'data:'],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'none'"],
+        frameSrc: ["'none'"],
+      },
+    })
+  );
+
 auth.authenticationToken.unless = unless;
 app.use(
     auth.authenticationToken.unless({

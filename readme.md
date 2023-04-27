@@ -1,0 +1,29 @@
+## HSB Tax management server and database implementation
+This README provides a detailed description of the database design process for a tax management firm called HSB(and the server side and security implementations as well). The purpose of the database is to help HSB manage tax processes and reduce the burden of paperwork. The database will have three classes of users: 
+
+- an Admin user who can create an Accountant and a Client, and also assign an Accountant to a Client.
+- an Accountant who can perform actions on their assigned Clients and exchange documents with them.
+- and finally, a Client who can communicate with their assigned Accountant and exchange documents with them.
+
+### Achieving the logical design(model) for the database
+The first version for the HSB tax management software had a view that was fed data from a mongoDB(NoSQL) database. Because of the sensitive nature of the application, there was a need to design and implement a robust relational database. To achieve this, we chose postgreSQL and took the following steps to achieve a Logical design for the eventual implementation.
+
+#### Step 1: Identified the Subjects
+The first step in the database design process was to identify the subjects that the database will track. Based on the business rules, and by inspecting the current existing database(which had inconsistencies), the following subjects were identified:
+
+
+1. User
+2. Accountant
+3. Client
+4. Assignment
+5. Chat
+6. Document
+7. Login
+8. AccountantAction 
+
+![subjects](assets/Screenshot%202023-04-27%20at%2022.56.22.png)
+
+#### Step 2: Defined table and relationships(ERD)
+
+![ERD](assets/Screenshot%202023-04-27%20at%2021.33.36.png)
+
