@@ -28,7 +28,26 @@ We then defined the tables based on the identified subjects and relationships an
 
 ![ERD](assets/Screenshot%202023-04-27%20at%2021.33.36.png)
 
-#### Step 3: Implementation
+#### Step 3: Implementation (all of our implementation here is in the db directory)
 The third step in the database design process was to implement the tables in a database management system (DBMS) using PostgreSQL. The implementation involved creating a database and the tables, along with the necessary columns and data types. The implementation also included defining the relationships between the tables using foreign keys.
 
 
+#### How to run this server/Database instance:
+
+  - ##### Clone this repository
+   - run `git clone https://github.com/codetipster/hsb.git``
+   - cd into hsb with `cd hsb` 
+  - ##### Install PostgreSQL
+   - Visit the PostgreSQL website (https://www.postgresql.org/) and download the appropriate installer for your operating system.
+
+   - Run the installer and follow the prompts to install PostgreSQL on your computer.
+
+  - #####  Configure PostgreSQL
+   - Once PostgreSQL is installed, you need to create a database user with the necessary privileges to create databases and tables. To do this, open the "pgAdmin" tool that was installed with PostgreSQL.
+   - In pgAdmin, right-click on "Login/Group Roles" and select "Create > Login/Group Role".
+
+   - Enter a name for the new login role, and select the "Role privileges" tab.(remember this name and the password you used)
+   In the "Privileges" section, check the boxes next to "Can create databases" and "Can create roles".
+   Click "Save" to create the new login role.
+
+  -  Create and name your database

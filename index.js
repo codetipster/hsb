@@ -1,6 +1,8 @@
 const mongoose = require("mongoose"); //for interaction with the database
 const { app } = require("./app");
 
+const db = require('./db'); //postgres db
+
 require("dotenv").config();
 
 // Setting the mongoose options
@@ -8,6 +10,8 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
+
+
 
 const PORT = process.env.PORT || 3000;
 
